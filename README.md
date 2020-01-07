@@ -1,9 +1,9 @@
-## Sequantix OCR framework
+# Sequantix OCR framework
 
 ## ssh username@ip
 ## PASSWORD: password
 
-# CLUSTERING port : 4000
+## CLUSTERING port : 4000
 
 
 
