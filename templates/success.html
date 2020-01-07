@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>ADVANCED OCR</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>    
+    <style>
+        .navbar {
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header" >
+                <a class="navbar-brand"><b style="color: white;">TOTAL PAGES : <span id="count">{{count}}</span></b></a>
+            </div> 
+            <button class="btn btn-default navbar-btn" id="detect_text"><b>DETECT TEXT</b></button>           
+        </div>
+    </nav>    
+
+    <div class="row">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:0%" id="progress">        
+            </div>
+        </div>
+    </div>    
+
+    <div class="container-fluid" id="mainframe">                  
+
+    </div>        
+    
+    <script>        
+    var count;
+    var id;
+
+    $(document).ready(function(){        
+        MainframeAppend("{{count}}","{{id}}")
+    });              
+    
+    function MainframeAppend(c,i){
+        id=i
+        count = Number(c);
+        for(i=0;i<count;i++)
+        {          
+            $("#mainframe").append('<div class="row" style="padding: 2%;"><div class="row"><div class="row-md-4" style="margin-left: 10px;"><h3><b>PAGE : '+(i+1)+'</b></h3></div></div><div class="row"><div class="col-md-4" style="border: 1px solid;"  ><img src="/static/'+id+i+'.png" class="img-responsive" id="img_'+i+'" alt="Preview"></div><div class="col-md-8"><div class="row" style="margin-left: 10px;"><textarea rows="5" style="width:100%; height: 20px;" id="txt_'+i+'">TEXT WILL BE EXTRACTED HERE</textarea></div></div></div></div>')                       
+        }               
+        //setTimeout(function() {
+        //    for(i=0;i<count;i++)
+        //   $("#txt_"+i).outerHeight($("#img_"+i).height()+3);                     
+        //},200);
+    }
+    </script>
+
+    <script>
+        $("#detect_text").click(function(){                    
+            for(i=0;i<count;i++){  
+                $("#progress").css("width","30%")                              
+                getboundingbox(i)                     
+            }     
+        })
+        var progress=0
+        async function getboundingbox(i){                        
+            var json = undefined;
+            $.get("/getboundingbox?filename="+id+i, function(data ) {
+                //console.log(data)
+                json = JSON.parse(data)                    
+            }).then(function(){
+                //alert(i)
+                progress+=(100/count)
+                $("#progress").css("width",progress+"%")
+                $("#img_"+i).attr("src", "/static/"+json['filename']+".png");
+                $("#txt_"+i).outerHeight($("#img_"+i).height()+3);
+                $("#txt_"+i).html(json['text'])
+            })                       
+        }
+
+    </script>
+  </body>
+
+
+
+</html>
+  
