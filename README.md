@@ -9,8 +9,7 @@
 
 --- CLUSTERING BASED ---
 ```console
-sudo su
-cd FLASK
+
 source bin/activate
 cd APPLICATION
 python ocr.py
