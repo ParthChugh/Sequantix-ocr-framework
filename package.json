@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "css-loader": "^0.28.5",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.3.0"
