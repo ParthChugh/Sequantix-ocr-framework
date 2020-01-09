@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 import os
 import cv2
 import cv2 as cv
@@ -15,17 +15,11 @@ from app import app
 def index():
   return render_template('index.html')
 
-@app.route('/getRandomData')
-def getRandomData():
-    return {
-        "a": 1,"b": 2,"c": 3
-    }
-
 @app.route('/success', methods = ['POST'])  
-def success():  
+def success(): 
     if request.method == 'POST':  
-        breakpoint()
         f = request.files['file']
+        breakpoint()
         filename=os.getcwd()+"/"+f.filename
         f.save(filename)
         doc = fitz.open(filename)

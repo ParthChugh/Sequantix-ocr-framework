@@ -18,7 +18,9 @@ def upload():
  
 @app.route('/success', methods = ['POST'])  
 def success():  
+    breakpoint()
     if request.method == 'POST':  
+        breakpoint()
         f = request.files['file']
         filename=os.getcwd()+"/"+f.filename
         f.save(filename)
