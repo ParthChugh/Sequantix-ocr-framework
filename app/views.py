@@ -24,6 +24,7 @@ def getRandomData():
 @app.route('/success', methods = ['POST'])  
 def success():  
     if request.method == 'POST':  
+        breakpoint()
         f = request.files['file']
         filename=os.getcwd()+"/"+f.filename
         f.save(filename)
