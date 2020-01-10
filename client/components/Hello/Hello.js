@@ -1,5 +1,5 @@
 import React, { useEffect, createRef } from 'react';
-
+import { Link } from 'react-router-dom'
 
 
 const Hello = (props) =>  {
@@ -46,6 +46,7 @@ const Hello = (props) =>  {
           </div>
           <button type="submit">Send data!</button>
         </form> 
+        <Link to="/login">Login</Link>
       </div>
     </div>
   ) 
