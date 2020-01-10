@@ -1,21 +1,11 @@
 import React, { useEffect, createRef } from 'react';
-require('./Hello.scss');
+
+
 
 const Hello = (props) =>  {
   const fileInput = createRef();
   
   const successCallback = (updatedFile) => {    
-    
-    
-  } 
-  
-  // const handleSubmit = () => {
-  //   if(fileInput.current.value !== "") {
-  //     successCallback(fileInput.current.files[0]);
-  //   }
-  // }
-
-  const onChangeHandler = (event) => {
     const url = "http://localhost:5000/success"
     // const data = new FormData()    
     // for (const file of event.target.files) {
@@ -33,6 +23,13 @@ const Hello = (props) =>  {
       })
       .catch(() => {
     });
+    
+  } 
+  
+  const handleSubmit = () => {
+    if(fileInput.current.value !== "") {
+      successCallback(fileInput.current.files[0]);
+    }
   }
 
   return(
@@ -40,15 +37,15 @@ const Hello = (props) =>  {
       <div className="center-page">
         <h2>CLUSTERING BASED OCR</h2>
         <h3 >COMPATABLE WITH PDF (MULTIPLE PAGES SUPPORTED)</h3>
-        {/* <form className="form-center" onSubmit={ t }> */}
+        <form className="form-center" onSubmit={ handleSubmit }>
           <div className="margin-10">
             <label>
               Upload file:
-              <input type="file" name="file" id='file' onChange={onChangeHandler} ref={fileInput} multiple/>
+              <input type="file" name="file" id='file' ref={fileInput} multiple/>
             </label>        
           </div>
-          {/* <button type="submit">Send data!</button> */}
-        {/* </form>  */}
+          <button type="submit">Send data!</button>
+        </form> 
       </div>
     </div>
   ) 

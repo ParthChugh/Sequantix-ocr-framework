@@ -1,12 +1,29 @@
 import React from 'react';
-import { HashRouter, Route, hashHistory } from 'react-router-dom';
-import Home from './components/HelloForm';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+  } from 'react-router-dom';
 
-// import more components
-export default (
-    <HashRouter history={hashHistory}>
-     <div>
-      <Route path='/' component={ Home } />
-     </div>
-    </HashRouter>
+import Home from './components/HelloForm';
+import LoginPage from './components/Login';
+
+
+
+const App = () => (
+    <Router>
+        <>
+        <Content />
+        </>
+    </Router>
 );
+    
+const Content = () =>  (
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route path="/login" component={LoginPage} />
+  </Switch>
+)
+
+export default App;
+
