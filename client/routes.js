@@ -3,25 +3,54 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    HashRouter
   } from 'react-router-dom';
  
+import {Nav} from 'react-bootstrap';
 import Home from './components/HelloForm';
 import LoginPage from './components/Login';
 
 
 
 const App = () => (
-    <Router>
-        <>
-        <Content />
-        </>
-    </Router>
+  <Router>        
+    <>
+      <div className='container'>
+        <div className='content'>
+          <TopBar />
+          <Content />
+        </div>
+        <Footer />
+      </div>
+    </>
+  </Router>
 );
     
+const TopBar = () => (
+  <Nav className="justify-content" activeKey="/home">
+    <Nav.Item>
+      <Nav.Link href="/">CLUSTERING BASED OCR</Nav.Link>
+    </Nav.Item> 
+    <Nav.Item>
+      <Nav.Link href="/">home</Nav.Link>
+    </Nav.Item> 
+    <Nav.Item>
+      <Nav.Link href="/">About us</Nav.Link>
+    </Nav.Item> 
+  </Nav>
+)
+
+const Footer = () => (
+  <footer className='footer'>
+    <p>Created by Sequantix</p>
+  </footer>
+)
 const Content = () =>  (
   <Switch>
-    <Route exact path="/" component={Home} />
-    <Route path="/login" component={LoginPage} />
+    <HashRouter>
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/" component={LoginPage} />    
+    </HashRouter>
   </Switch>
 )
 

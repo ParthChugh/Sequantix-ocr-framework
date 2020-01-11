@@ -8,7 +8,9 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
-      }
+      },
+      { test: /\.css$/, use: 'css-loader' },
+      { test: /\.ts$/, use: 'ts-loader' }
     ]
   },
   resolve: {
@@ -24,6 +26,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: './dist',
+    historyApiFallback: true,
     hot: true
   }
 };

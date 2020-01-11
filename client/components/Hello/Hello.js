@@ -1,10 +1,8 @@
-import React, { useEffect, createRef } from 'react';
-import { Link } from 'react-router-dom'
+import React, {  createRef } from 'react';
 
 
-const Hello = (props) =>  {
+const Hello = () =>  {
   const fileInput = createRef();
-  
   const successCallback = (updatedFile) => {    
     const url = "http://localhost:5000/success"
     // const data = new FormData()    
@@ -35,7 +33,7 @@ const Hello = (props) =>  {
   return(
     <div>   
       <div className="center-page">
-        <h2>CLUSTERING BASED OCR</h2>
+        <h2></h2>
         <h3 >COMPATABLE WITH PDF (MULTIPLE PAGES SUPPORTED)</h3>
         <form className="form-center" onSubmit={ handleSubmit }>
           <div className="margin-10">
@@ -46,7 +44,7 @@ const Hello = (props) =>  {
           </div>
           <button type="submit">Send data!</button>
         </form> 
-        <Link to="/login">Login</Link>
+      
       </div>
     </div>
   ) 
