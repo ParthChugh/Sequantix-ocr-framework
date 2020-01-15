@@ -6,20 +6,23 @@ import {
     HashRouter
   } from 'react-router-dom';
  
-import {Nav} from 'react-bootstrap';
-import Home from './MasterApp/components/HelloForm';
+import { Nav } from 'react-bootstrap';
+import Home from './MasterApp/components/FormOCR';
 import LoginPage from './MasterApp/components/Login';
-
-
+import FetchResult from './MasterApp/components/FetchResult';
 
 const App = () => (
   <Router>        
     <>
-      <div className='container'>
-        <div className='content'>
+      <div className='content'>
+        <div className="content-container">
           <Content />
+        </div>        
+        <div style={{padding: 10}}>
+          <Footer />
         </div>
-        <Footer />
+
+        
       </div>
     </>
   </Router>
@@ -48,8 +51,9 @@ const Footer = () => (
 const Content = () =>  (
   <Switch>
     <HashRouter>
-        <Route exact path="/home" component={ Home } />
+      <Route exact path="/home" component={ Home } />
         <Route exact path="/" component={ LoginPage } />
+        <Route exact path="/success" component={ FetchResult } />
     </HashRouter>
   </Switch>
 )

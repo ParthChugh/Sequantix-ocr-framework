@@ -1,6 +1,5 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Redirect } from 'react-router-dom';
 import {Button} from 'react-bootstrap'
 import "./login.scss"
 
