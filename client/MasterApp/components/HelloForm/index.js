@@ -1,7 +1,7 @@
 import React, {  createRef } from 'react';
+import './HelloForm.scss';
 
-
-const Hello = () =>  {
+const HelloForm = () => {
   const fileInput = createRef();
   const successCallback = (updatedFile) => {    
     const url = "http://localhost:5000/success"
@@ -11,7 +11,6 @@ const Hello = () =>  {
     // }
     const data = new FormData()
     data.append('file', event.target.files[0])
-    console.log(data);
     fetch(url, {
       method: 'POST', 
       body: data
@@ -30,10 +29,9 @@ const Hello = () =>  {
     }
   }
 
-  return(
+  return (
     <div>   
       <div className="center-page">
-        <h2></h2>
         <h3 >COMPATABLE WITH PDF (MULTIPLE PAGES SUPPORTED)</h3>
         <form className="form-center" onSubmit={ handleSubmit }>
           <div className="margin-10">
@@ -44,10 +42,9 @@ const Hello = () =>  {
           </div>
           <button type="submit">Send data!</button>
         </form> 
-      
       </div>
     </div>
-  ) 
-}
+  );
+};
 
-export default Hello;
+export default HelloForm;

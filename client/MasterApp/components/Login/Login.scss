@@ -1,0 +1,17 @@
+
+.login {
+    h2 {
+        margin-bottom: 40px;
+    }
+    .login-container {
+        display: flex;
+        flex: 1;
+        flex-direction: column; 
+        border-width: 1px;
+        border-color: gray;
+        input {
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+    }    
+}

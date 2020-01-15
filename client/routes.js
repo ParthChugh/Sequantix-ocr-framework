@@ -7,8 +7,8 @@ import {
   } from 'react-router-dom';
  
 import {Nav} from 'react-bootstrap';
-import Home from './components/HelloForm';
-import LoginPage from './components/Login';
+import Home from './MasterApp/components/HelloForm';
+import LoginPage from './MasterApp/components/Login';
 
 
 
@@ -17,7 +17,6 @@ const App = () => (
     <>
       <div className='container'>
         <div className='content'>
-          <TopBar />
           <Content />
         </div>
         <Footer />
@@ -45,11 +44,12 @@ const Footer = () => (
     <p>Created by Sequantix</p>
   </footer>
 )
+
 const Content = () =>  (
   <Switch>
     <HashRouter>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/" component={LoginPage} />    
+        <Route exact path="/home" component={ Home } />
+        <Route exact path="/" component={ LoginPage } />
     </HashRouter>
   </Switch>
 )
