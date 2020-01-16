@@ -1,5 +1,6 @@
 import React, {  useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
+import {BASE_URL} from '../../../constants'
 import {Button} from 'react-bootstrap';
 import ShowCheckBox from './showCheckBox';
 import './styles.scss';
@@ -8,11 +9,12 @@ const HelloForm =  (props) =>  {
   const { register, handleSubmit, errors } = useForm()
   const [fileName, setFileName] = useState('');
   const [responseJson, updateResponse] = useState({});
+
   const [showDetectButton, updateShowDetectButton] = useState(false);
   const [filesUploaded, updatedFilesUploaded] = useState({});
 
   const successCallback = (updatedFiles) => {    
-    const url = "http://localhost:5000/success"
+    const url = `${BASE_URL}/success`
     const uploadedFiles = {}
     Object.values(document.getElementById('upload').files).forEach((el) => {
       return uploadedFiles[el.name] = false

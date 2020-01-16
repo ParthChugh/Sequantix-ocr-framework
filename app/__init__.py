@@ -1,6 +1,8 @@
 from flask import Flask, render_template
+import os
+ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../dist')
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=ASSETS_DIR)
 from app import views
 
 def create_app(env='local'):

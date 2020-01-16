@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CSVDownload } from "react-csv";
 import { Spinner } from 'react-bootstrap'
+import { BASE_URL } from '../../../constants';
 import '../FormOCR/styles.scss';
 
 const FetchResult = (props) => {  
@@ -8,7 +9,7 @@ const FetchResult = (props) => {
   const [finalCSV, updatedCSV] = useState([])
   const [showSpinner, updateShowSpinner] = useState(true)
   const fetchData = () => { 
-    const url = `http://localhost:5000/getboundingbox_and_text?file_name=${detail.name}&total_pages=${detail.total_pages}`;
+    const url = `${BASE_URL}/getboundingbox_and_text?file_name=${detail.name}&total_pages=${detail.total_pages}`;
     fetch(url, {
       method: 'GET',
       headers: {
