@@ -1,19 +1,24 @@
 
 .login {
-    width: 60%;
-    align-self: center;
+    
+    align-items: center;
+    margin: 20px; 
+    
     h2 {
         margin-bottom: 40px; 
+        margin-right: 100px;
+        margin-left: 100px;
     }
     .login-container {
         display: flex;
         flex: 1;
         flex-direction: column; 
         border-width: 1px;
-        border-color: gray;
+        margin-left: 100px;
+        margin-right: 100px;
         input {
             margin-bottom: 10px;
-            border-radius: 10px;
+            border-radius: 5px;
         }
     }
     .login-modal {
@@ -26,4 +31,15 @@
     display: flex;
     flex: 1;
     justify-content: center;
+    cursor: pointer;
+    text-decoration-line: underline;
 }    
+
+.logo-header {    
+    text-align: center;
+    padding: 10px;
+    
+    img {
+        height: 350px;
+    }
+}
