@@ -20,9 +20,9 @@ const App = () => (
           
           <Content />
         </div>        
-        <div style={{padding: 10}}>
+        {/* <div style={{padding: 10}}>
           <Footer />
-        </div>   
+        </div>    */}
       </div>
     </>
   </Router>

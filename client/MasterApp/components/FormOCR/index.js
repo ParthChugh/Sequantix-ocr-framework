@@ -75,9 +75,12 @@ const HelloForm =  (props) =>  {
           <img src={ SequantixLogo } />
         </div>
         <div className="home-container">
+        <h1>
+          Sequantix OCR 
+        </h1>
           <div>
             <form  className="form-center" onSubmit={handleSubmit(onSubmit)}>  
-              {errors.upload && errors.upload.type === 'required' && <h2>Please upload some file 😅</h2>}          
+              {errors.upload && errors.upload.type === 'required' && <h4>Please upload some file</h4>}          
               <input
                 className="draggable-container"
                 type="file" 
