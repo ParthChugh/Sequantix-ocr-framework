@@ -15,5 +15,15 @@
             margin-bottom: 10px;
             border-radius: 10px;
         }
-    }    
+    }
+    .login-modal {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
 }
+.login-ref {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}    

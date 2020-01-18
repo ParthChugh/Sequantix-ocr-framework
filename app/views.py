@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, send_file
 import fitz
 import cv2 
 import pytesseract
@@ -56,6 +56,11 @@ def success():
     print(name,total)
     return {"name":  name, "total_pages": total};
 
+@app.route('/fetch_image', methods = ['GET'])  
+def get_file(): 
+  file_name=base_path+request.args['file_name']+".png"
+  return send_file(file_name, mimetype='image/gif')
+
 @app.route('/getboundingbox_and_text', methods = ['GET'])
 def getboundingbox_and_text(): 
   total_pages=int(request.args['total_pages'])
@@ -68,7 +73,6 @@ def getboundingbox_and_text():
       writer.writerow(headers)   
 
       for current_page in range(0,total_pages):
-
           img = cv2.imread(base_path+file_name+"_"+str(current_page)+".png")
           myarr=Clustering_Bounding_Boxes_OMNI_FORMAT_1_HORIZONTAL(img)
           texts=[]

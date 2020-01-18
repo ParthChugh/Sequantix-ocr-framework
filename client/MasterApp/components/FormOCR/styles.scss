@@ -1,12 +1,21 @@
 .center-page {
     display: flex;
     flex-direction: column; 
-    align-items: center;
-    text-align: center;   
-    h3 {
-        background-color: darkgrey;
+     
+    .logo-header {    
+        background-color: #EE7C33;
+        text-align: center;
         padding: 10px;
         width: 100%;
+        img {
+            height: 250px;
+        }
+    }
+    .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 80px;
     }
 }
 
