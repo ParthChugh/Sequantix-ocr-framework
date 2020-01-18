@@ -31,6 +31,7 @@ const FetchResult = (props) => {
   },[finalCSV])
   return (
     <div className="center-page">
+
      { showSpinner ?
       <Spinner animation="border" variant="primary" />   
        : 

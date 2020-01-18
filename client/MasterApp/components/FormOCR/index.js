@@ -69,6 +69,7 @@ const HelloForm =  (props) =>  {
 
   return (
     <div>
+      
       <div className="center-page"> 
         <div className="logo-header"> 
           <img src={ SequantixLogo } />
@@ -78,15 +79,15 @@ const HelloForm =  (props) =>  {
             <form  className="form-center" onSubmit={handleSubmit(onSubmit)}>  
               {errors.upload && errors.upload.type === 'required' && <h2>Please upload some file 😅</h2>}          
               <input
-                className="draggable-container" 
+                className="draggable-container"
                 type="file" 
-                name="upload" 
-                id='upload'
+                name="upload"
+                id="upload"
                 multiple 
                 ref={register({
                   required: true,
                 })}
-              />
+              />             
               {fileName && <div>Uploaded file name is {fileName}</div>}
               <Button variant="outline-dark" type="submit">Submit</Button>
             </form>    
