@@ -1,11 +1,15 @@
 import os
 import cv2
-import imutils
-from converter import Convert
 import pytesseract
 factor=5
-base_path=os.getcwd()+'/static/'
+base_path=os.getcwd()+"/static/"
 
+def showimage(image):
+    #cv2.imshow('image',cv2.resize(image, (950, 40)))
+    cv2.imshow('image',cv2.resize(image, (950, 740)))
+    #cv2.imshow('image',image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 def get_horizontal_lines(img):
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -20,36 +24,44 @@ def get_horizontal_lines(img):
         arr.append([x + 20, y-5, w - 20, h +10])
     return arr
 
-img = cv2.imread(base_path+"sample_4.PNG")
-grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-co_ord=get_horizontal_lines(img)
+def ocr(co_ord,grey,f):
+    for i in range(0,len(co_ord)):
+        x,y,w,h=co_ord[i]
+        #cv2.rectangle(img,(x,y), (x+w,y+h), (255, 0, 255), 2)
+        #rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (4, 4))
+        #dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
+        t = pytesseract.image_to_string(grey[y:y+h,x:x+w]).replace("\n"," ")
+        t=" ".join(t.split())
+        if "description" in t.lower():
+            i+=1
+            break
 
-for i in range(0,len(co_ord)):
-    x,y,w,h=co_ord[i]
-    #cv2.rectangle(img,(x,y), (x+w,y+h), (255, 0, 255), 2)
-    #rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (4, 4))
-    #dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
-    t = pytesseract.image_to_string(grey[y:y+h,x:x+w]).replace("\n"," ")
-    t=" ".join(t.split())
-    if "description" in t.lower():
-        i+=1
-        break
-
-for i in co_ord[i:]:
-    x,y,w,h=i
-    #cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
-    #rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (4, 4))
-    #dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
-    t = pytesseract.image_to_string(grey[y:y + h, x:x + w]).replace("\n", " ")
-    t = " ".join(t.split())
-    if "www.okura-nikko.com" in t.lower():
-        break
-    if "-" in t.split(" ")[0]:
-        print(t.split(" ")[0]," ".join(t.split(" ")[1:-1]) ,t.split(" ")[-1])
-    if "total" in t.lower():
-        print(" ".join(t.split(" ")[:-2]),t.split(" ")[-2],t.split(" ")[-1])
-    if (not ("-" in t.split(" ")[0])) and (not("total" in t.lower())) and (t!=""):
+    for i in co_ord[i:]:
+        x,y,w,h=i
+        #cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
+        #rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (4, 4))
+        #dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
+        t = pytesseract.image_to_string(grey[y:y + h, x:x + w]).replace("\n", " ")
+        t = " ".join(t.split())
         print(t)
+        if "www.okura-nikko.com" in t.lower():
+            break
+        if "-" in t.split(" ")[0]:
+            f.write(t.split(" ")[0]+','+" ".join(t.split(" ")[1:-1])+','+t.split(" ")[-1]+'\n')
+        if "total" in t.lower():
+            f.write(" ".join(t.split(" ")[:-2])+','+t.split(" ")[-2]+','+t.split(" ")[-1]+'\n')
+        if (not ("-" in t.split(" ")[0])) and (not("total" in t.lower())) and (t!=""):
+            f.write(t+'\n')
+
+def fun(name,total_pages):
+    f = open(base_path+name+'.csv','w')
+    for i in range(0,total_pages):
+        img = cv2.imread(base_path+name+"_"+str(i)+".PNG")
+        grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        co_ord = get_horizontal_lines(img)
+        ocr(co_ord, grey, f)
+    f.close()
+
 
 
 

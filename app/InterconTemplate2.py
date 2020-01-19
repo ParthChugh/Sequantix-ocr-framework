@@ -1,10 +1,15 @@
 import os
 import cv2
-import imutils
-from converter import Convert
+from app import converter
 import pytesseract
 factor=5
-base_path=os.getcwd()+'/static/'
+base_path=os.getcwd()+"/static/"
+
+def showimage(image):
+    #cv2.imshow('image',cv2.resize(image, (950, 40)))
+    cv2.imshow('image',cv2.resize(image, (950, 740)))
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 def get_horizontal_lines(img):
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -34,16 +39,18 @@ def ocr(co_ord,grey,f):
         t = " ".join(t.split())
         if t!="":
             f.write(t.replace(",","").split("$")[0]+','+t.replace(",","").split(" ")[-1]+'\n')#t.split(" ")[:-2]+','+t.split(" ")[-1])
+            print(t)
         if "final" in t.lower():
             break
 
-def interconTemplate2():
-    i=0
-    f = open('csvfile.csv','w')
-    img = cv2.imread(base_path+"sample_"+str(i)+".PNG")
-    l,w,h = img.shape
-    img = img[0:l,0:w-100]
-    grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    co_ord=get_horizontal_lines(img)
-    ocr(co_ord,grey,f)
+def fun(name,total_pages):
+    f = open(base_path+name+'.csv','w')
+    for i in range(0,total_pages):
+        img = cv2.imread(base_path+name+"_"+str(i)+".PNG")
+        l,w,h = img.shape
+        img = img[0:l,0:w-100]
+        grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        co_ord=get_horizontal_lines(img)
+        ocr(co_ord,grey,f)
     f.close()
+
