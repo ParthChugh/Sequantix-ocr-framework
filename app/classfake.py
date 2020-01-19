@@ -11,8 +11,8 @@ def showimage(image):
 
 def fun(file_name,total_pages):
     img = cv2.imread(base_path + file_name+"_"+str(total_pages)+ ".png")
-    #img = cv2.imread(base_path + file_name + "_" + total_pages + ".PNG")
-    l, w, h = img.shape
+    #img = cv2.imread(base_path + file_name + "_" + total_pages + ".png")
+    _, w, _ = img.shape
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     grey=grey[0:600,0:w]
     t=pytesseract.image_to_string(grey).replace("\n", " ").replace(",", "")

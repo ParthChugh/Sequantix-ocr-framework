@@ -46,7 +46,7 @@ def ocr(co_ord,grey,f):
 def fun(name,total_pages):
     f = open(base_path+name+'.csv','w')
     for i in range(0,total_pages):
-        img = cv2.imread(base_path+name+"_"+str(i)+".PNG")
+        img = cv2.imread(base_path+name+"_"+str(i)+".png")
         l,w,h = img.shape
         img = img[0:l,0:w-100]
         grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
