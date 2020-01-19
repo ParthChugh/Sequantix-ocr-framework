@@ -62,9 +62,6 @@ const App = (props) => {
               </div>
             </form>
           </div>
-          
-        
-        
       </Modal>
     </div>
     

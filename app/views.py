@@ -9,6 +9,7 @@ factor=5
 base_path=os.getcwd()+'/static/'
 from app import app
 
+
 def Get_Text(img):
   return pytesseract.image_to_string(img).replace("\n",' ').upper()
 
@@ -79,9 +80,7 @@ def getboundingbox_and_text():
 
           for i in  myarr[::-1]:
               x,y,w,h=i
-              #cv2.rectangle(img,(x,y-50),(x+w,y+h+50),(0,255,0),2)
               text=Get_Text(img[y-5:y+h+5,x:x+w+10]).replace("=","").replace(",","")
-              #showimage(img[y-5:y+h+5,x:x+w+10])
               text=" ".join(text.split())
               if("ROOM" in text or "HOTEL" in text or text==""):
                   continue
@@ -108,8 +107,13 @@ def getboundingbox_and_text():
                   writer.writerow([room, name, arrival,departure,room,room_tax,destination,f_b,parking,misc,banquets,catering,av_value,grand_total,payments])
                   data.append([room, name, arrival,departure,room,room_tax,destination,f_b,parking,misc,banquets,catering,av_value,grand_total,payments])
               except :
-                   print("")
-  
+                   print("")  
   return {"lists": data}
 
-  
+
+# def showimage(image):
+#       #cv2.imshow('image',cv2.resize(image, (950, 40)))
+#   cv2.imshow('image',cv2.resize(image, (950, 740)))
+#   cv2.waitKey(0)
+#   cv2.destroyAllWindows()
+

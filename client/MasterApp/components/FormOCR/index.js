@@ -69,33 +69,37 @@ const HelloForm =  (props) =>  {
 
   return (
     <div>
-      
       <div className="center-page"> 
         <div className="logo-header"> 
           <img src={ SequantixLogo } />
         </div>
         <div className="home-container">
-        <h1>
-          Sequantix OCR 
+        <h1 className="font-weight-eurostile">
+          Sequivision
         </h1>
           <div>
-            <form  className="form-center" onSubmit={handleSubmit(onSubmit)}>  
-              {errors.upload && errors.upload.type === 'required' && <h4>Please upload some file</h4>}          
-              <input
-                className="draggable-container"
-                type="file" 
-                name="upload"
-                id="upload"
-                multiple 
-                ref={register({
-                  required: true,
-                })}
-              />             
-              {fileName && <div>Uploaded file name is {fileName}</div>}
-              <Button variant="outline-dark" type="submit">Submit</Button>
-            </form>    
-            { showCheckBox(filesUploaded) }
-            { fetchingObject ? <Spinner animation="border" variant="primary"/> : "" }  
+            { (fetchingObject) ? 
+            <div className="spinner-center">
+              { showCheckBox(filesUploaded) }            
+              <Spinner animation="border" variant="primary"/>
+            </div>
+          : !showDetectButton &&
+          <form className="form-center" onSubmit={handleSubmit(onSubmit)}>  
+            {errors.upload && errors.upload.type === 'required' && <h4>Please upload some file</h4>}          
+            <input
+              className="draggable-container"
+              type="file" 
+              name="upload"
+              id="upload"
+              multiple 
+              ref={register({
+                required: true,
+              })}
+            />             
+            {fileName && <div>Uploaded file name is {fileName}</div>}
+            <Button variant="outline-dark" type="submit">Submit</Button>
+          </form>
+          }
             {
               showDetectButton && (
                 <Button 
@@ -107,7 +111,6 @@ const HelloForm =  (props) =>  {
               )
             }
           </div>
-
         </div>
       </div>
     </div>
