@@ -1,0 +1,39 @@
+const webpack = require('webpack');
+
+module.exports = {
+  entry: './client/main.js',
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      { test: /\.ts$/, use: 'ts-loader' }
+    ]
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
+  output: {
+    path: __dirname + '/static',
+    filename: 'scripts/main.js',
+    publicPath: 'http://52.173.134.153:5000/public/',
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  devServer: {
+    contentBase: './dist',
+    historyApiFallback: true,
+    hot: true
+  }
+};
