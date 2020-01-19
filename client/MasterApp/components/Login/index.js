@@ -54,7 +54,7 @@ const App = (props) => {
               <input type="text" placeholder="Email" name="email" autoComplete="username" ref={register({required: true, pattern: /^\S+@\S+$/i})} />
               {errors.email && <span>Please enter a valid Email Id</span>}
               <input type="password" name="loginPassword" placeholder="Password" autoComplete="current-password" ref={register({required: true})} />
-              {errors.loginUsername  && errors.loginPassword && <span>Please enter registerd username and password</span>}    
+              {errors.loginPassword && <span>Please enter valid password</span>}    
               <div className="flex-direction-row">
                 <div className="margin-10">
                   <Button type="submit" variant="primary" >
