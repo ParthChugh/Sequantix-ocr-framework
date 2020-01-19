@@ -4,21 +4,21 @@
     align-items: center;
     margin: 20px; 
     
-    h2 {
-        margin-bottom: 40px; 
-        margin-right: 100px;
-        margin-left: 400px;
-    }
+    
     .login-container {
         display: flex;
-        flex: 1;
         flex-direction: column; 
         border-width: 1px;
-        margin-left: 400px;
-        margin-right: 400px;
+        
+        align-items: center;
         input {
+            width: 45%;
             margin-bottom: 10px;
             border-radius: 5px;
+        }
+        h2 {
+            margin-bottom: 40px; 
+            
         }
     }
     .login-modal {

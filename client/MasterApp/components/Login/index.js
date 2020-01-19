@@ -24,10 +24,11 @@ const App = (props) => {
       <div className="logo-header"> 
         <img src={ SequantixLogo } />
       </div>
-      <h2>
-        Login
-      </h2>
+      
       <form className="login-container center-login" onSubmit={handleSubmit(onSubmit)}>  
+        <h2>
+          Login
+        </h2>
         <input name="username"  placeholder="Enter your name" ref={register({required: true})} />
         {errors.username && <span>Please enter a valid username</span>}
         <input type="password" name="password" placeholder="Password" autoComplete="current-password" ref={register({required: true})} />
@@ -36,7 +37,7 @@ const App = (props) => {
           Submit
         </Button>
         <a className="login-ref" variant="primary" onClick={handleShow}>
-          Login
+          Sign up
         </a>
       </form>
       

@@ -10,7 +10,7 @@ def showimage(image):
     cv2.destroyAllWindows()
 
 def fun(file_name,total_pages):
-    img = cv2.imread(base_path + file_name+"_"+str(total_pages)+ ".PNG")
+    img = cv2.imread(base_path + file_name+"_"+str(total_pages)+ ".png")
     #img = cv2.imread(base_path + file_name + "_" + total_pages + ".PNG")
     l, w, h = img.shape
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
