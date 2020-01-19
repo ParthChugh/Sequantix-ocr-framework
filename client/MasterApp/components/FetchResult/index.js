@@ -3,6 +3,7 @@ import { CSVDownload } from "react-csv";
 import { Spinner } from 'react-bootstrap'
 import { BASE_URL } from '../../../constants';
 import '../FormOCR/styles.scss';
+import SequantixLogo from '../../../assests/SqxBigHome.png';
 
 const FetchResult = (props) => {  
   const {location: {state: {detail}}} = props;
@@ -28,20 +29,26 @@ const FetchResult = (props) => {
 
   useEffect(() => {
     fetchData();
-  },[finalCSV])
+  },[])
   return (
-    <div className="center-page">
-
-     { showSpinner ?
-      <Spinner animation="border" variant="primary" />   
-       : 
-       <div>
-         <CSVDownload data={finalCSV.lists} /> 
-         <h1> Thank You for using Sequantix OCR</h1>
-       </div>
-      
-       }
-    </div>    
+    <div className="center-page"> 
+        <div className="logo-header"> 
+          <img src={ SequantixLogo } />
+          <div>
+            CSV will be downloaded soon<br/>
+          </div>
+          
+          { showSpinner ?
+            <Spinner animation="border" variant="primary" />   
+            : 
+            <div>   
+              <CSVDownload data={finalCSV.lists} />          
+              
+              <h2>Thank you for using Sequivision</h2>
+            </div>
+          }
+        </div>
+    </div> 
   )
 }
 

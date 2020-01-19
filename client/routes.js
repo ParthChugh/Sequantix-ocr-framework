@@ -17,7 +17,6 @@ const App = () => (
     <> 
       <div className='content'>
         <div className="content-container">
-          
           <Content />
         </div>        
         {/* <div style={{padding: 10}}>
@@ -50,14 +49,15 @@ const Footer = () => (
 
 const Content = () =>  (
   <Switch>
-    <div style={{
+    <>
+      <HashRouter> 
+      <div style={{
         position: "absolute",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%"
       }}>
-    <HashRouter> 
         <Particles 
         params={{
           "particles": {
@@ -182,10 +182,10 @@ const Content = () =>  (
           <Route exact path="/home" component={ Home } />
           <Route exact path="/" component={ LoginPage } />
           <Route exact path="/success" component={ FetchResult } />
-        
+    </div>
     </div>
     </HashRouter>
-    </div>
+    </>
   </Switch>
 )
 
