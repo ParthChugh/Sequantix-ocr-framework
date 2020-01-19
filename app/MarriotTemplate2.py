@@ -1,10 +1,14 @@
 import os
 import cv2
-import imutils
-from converter import Convert
 import pytesseract
 factor=5
-base_path=os.getcwd()+'/static/'
+base_path=os.getcwd()+"/static/"
+
+def showimage(image):
+    cv2.imshow('image',cv2.resize(image, (950, 40)))
+    #cv2.imshow('image',cv2.resize(image, (950, 740)))
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 def get_horizontal_lines(img):
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -16,7 +20,8 @@ def get_horizontal_lines(img):
     for i in cnts[::-1]:
         x,y,w,h=cv2.boundingRect(i)
         #cv2.rectangle(img, (x+20, y-5), (x + w-20, y + h+5), (255, 0, 255), 2)
-        arr.append([x , y-10, w , h+20 ]) 
+        arr.append([x , y-10, w , h+20 ])
+    #showimage(img)
     return arr
 
 def ocr(co_ord,grey,f):
@@ -30,21 +35,22 @@ def ocr(co_ord,grey,f):
             break
     for i in co_ord[i:]:
         x, y, w, h = i
-        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
+        # cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
         rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
         dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
         t = pytesseract.image_to_string(dilation).replace("\n", " ")
         t = " ".join(t.split())
         for j in t.split(" "):
+            print(j)
             f.write(j+str(","))
         f.write("\n")
 
-def marriotTemplate2():
-    i=1
-    f = open('csvfile.csv','w')
-    img = cv2.imread(base_path+"sample_"+str(i)+".PNG")
-    l,w,h = img.shape
-    grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    co_ord=get_horizontal_lines(img)
-    ocr(co_ord,grey,f)
+def fun(name,total_pages):
+    f = open(base_path+name+'.csv','w')
+    for i in range(0,total_pages):
+        img = cv2.imread(base_path+name+"_"+str(i)+".PNG")
+        l,w,h = img.shape
+        grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        co_ord=get_horizontal_lines(img)
+        ocr(co_ord,grey,f)
     f.close()
