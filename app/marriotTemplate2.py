@@ -16,6 +16,7 @@ def get_horizontal_lines(img):
     rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (factor * 500, 1))
     dilation = cv2.dilate(thresh, rect_kernel, iterations=1)
     cnts, h = cv2.findContours(dilation, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    
     arr=[]
     for i in cnts[::-1]:
         x,y,w,h=cv2.boundingRect(i)

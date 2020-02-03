@@ -1,7 +1,7 @@
 from flask import render_template, request, Response
 import time
 import os 
-from app import converter, interconTemplate1, interconTemplate2, marriotTemplate1, marriotTemplate2, nikkoTemplate1, omniTemplate1, omniTemplate2, classfake
+from app import converter, interconTemplate1, interconTemplate2, marriotTemplate1, marriotTemplate2, nikkoTemplate1, omniTemplate1, omniTemplate2, classfake, hdfc, federal
 factor=5
 base_path=os.getcwd()+'/static/'
 from app import app
@@ -19,6 +19,7 @@ def success():
         f.save(doc_path)
         total_pages=converter.Convert(doc_path,-1,file_name,base_path,factor)
     return {"name":  file_name, "total_pages": total_pages};
+    
 
 @app.route('/update_bounding_box')
 def update_bounding_box():
@@ -40,6 +41,12 @@ def update_bounding_box():
         fff=1
     if fake == "marriott1":
         marriotTemplate1.fun(file_name,total_pages)
+        fff=1
+    if fake == "hdfc":
+        hdfc.fun(file_name,total_pages)
+        fff=1
+    if fake == "federal":
+        federal.fun(file_name,total_pages)
         fff=1
     if fff==0:
         marriotTemplate2.fun(file_name, total_pages)

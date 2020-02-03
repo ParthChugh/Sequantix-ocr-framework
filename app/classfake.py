@@ -16,6 +16,10 @@ def fun(file_name,total_pages):
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     grey=grey[0:600,0:w]
     t=pytesseract.image_to_string(grey).replace("\n", " ").replace(",", "")
+    if "hdfc" in t.lower():
+        return("hdfc")
+    if "federal" in t.lower():
+        return("federal")
     if "omni" in t.lower():
         if "american" in t.lower():
             return("omni1")
