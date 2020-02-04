@@ -49,10 +49,18 @@ def ocr(co_ord,grey,f, isArray = False):
             data = data  + t + ","
     else:
         x,y,w,h=co_ord
-        rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
-        dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
-        t = pytesseract.image_to_string(dilation, config='--psm 6')
-        data = t;
+        start_row, start_col = x, y
+        # Let's get the ending pixel coordinates (bottom right of cropped top)
+        end_row, end_col = h, int(w* .5)
+        
+        d = pytesseract.image_to_string(grey[start_col:start_col+ end_row , start_row:start_row+ end_col], config='--psm 6').replace(":", ",")
+        
+        start_row, start_col = x + int(w* .5), y
+        # Let's get the ending pixel coordinates (bottom right of cropped top)
+        end_row, end_col = h, int(w* .5)
+        
+        t = pytesseract.image_to_string(grey[start_col:start_col+ end_row , start_row:start_row+ end_col], config='--psm 6').replace(":", ",")
+        data = d + t;
     f.write(data+'\n')
     print(data)
 
