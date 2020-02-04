@@ -16,9 +16,12 @@ def get_horizontal_lines(img, fileName):
         area = cv2.contourArea(c)
         areaArray.append(area)
     sorteddata = sorted(zip(areaArray, cnts), key=lambda x: x[0], reverse=True)
-    secondlargestcontour = sorteddata[1][1] 
-    x,y,w,h=cv2.boundingRect(secondlargestcontour)
-    ocr([x,y,w,h], grey, fileName)
+    try:
+        secondlargestcontour = sorteddata[1][1] 
+        x,y,w,h=cv2.boundingRect(secondlargestcontour)
+        ocr([x,y,w,h], grey, fileName)
+    except: 
+        print("secondlargestcontour doesn't exist")
     x,y,w,h=cv2.boundingRect(sorteddata[0][1])
     crop_img = grey[y:y+h, x:x+w]
     cnts = cv2.findContours(crop_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -42,7 +45,7 @@ def ocr(co_ord,grey,f, isArray = False):
             x,y,w,h=co_ord[i]
             rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
             dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
-            t = pytesseract.image_to_string(dilation).replace("\n", " ")
+            t = pytesseract.image_to_string(dilation).replace(",", "").replace("\n", " ")
             data = data  + t + ","
     else:
         x,y,w,h=co_ord
