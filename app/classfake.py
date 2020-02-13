@@ -18,8 +18,6 @@ def fun(file_name,total_pages):
     t=pytesseract.image_to_string(grey).replace("\n", " ").replace(",", "")
     if "hdfc" in t.lower():
         return("hdfc")
-    if "federal" or "sbi" in t.lower():
-        return("federal")
     if "omni" in t.lower():
         if "american" in t.lower():
             return("omni1")
@@ -35,3 +33,5 @@ def fun(file_name,total_pages):
             return("marriott2")
         else:
             return("marriott1")
+    if "federal" or "sbi" in t.lower():
+        return("federal")

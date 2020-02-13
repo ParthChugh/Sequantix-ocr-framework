@@ -26,6 +26,7 @@ def update_bounding_box():
     total_pages = int(request.args['total_pages'])
     file_name = request.args['file_name']
     fake=classfake.fun(file_name,0)
+    print(fake)
     fff=0
     if fake == "omni1":
         omniTemplate1.fun(file_name,total_pages)

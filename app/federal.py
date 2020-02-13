@@ -60,7 +60,7 @@ def ocr(co_ord,grey,f, isArray = False):
         end_row, end_col = h, int(w* .5)
         
         t = pytesseract.image_to_string(grey[start_col:start_col+ end_row , start_row:start_row+ end_col], config='--psm 6').replace(":", ",")
-        data = d + t;
+        data = d +'\n' + t;
     f.write(data+'\n')
     print(data)
 
