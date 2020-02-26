@@ -10,7 +10,6 @@ const HelloForm =  (props) =>  {
   const { register, handleSubmit, errors } = useForm()
   const [fileName, setFileName] = useState('');
   const [responseJson, updateResponse] = useState({});
-
   const [showDetectButton, updateShowDetectButton] = useState(false);
   const [filesUploaded, updatedFilesUploaded] = useState({});
   const [fetchingObject, updateFetchingObject] = useState(false)
@@ -22,12 +21,13 @@ const HelloForm =  (props) =>  {
     Object.values(document.getElementById('upload').files).forEach((el) => {
       return uploadedFiles[el.name] = false
     })
+  
     Object.values(updatedFiles).forEach(element => {
-      const data = new FormData()      
+      const data = new FormData()
       data.append('file', element)
       fetch(url, {
         method: 'POST', 
-        body: data
+        body: data,
       })
         .then((response) => response.json().then((json) => {
           updateResponse(json);
@@ -61,6 +61,7 @@ const HelloForm =  (props) =>  {
   } 
 
   const handleClick = () => {
+    responseJson["access_token"] = props.location.state.detail.access_token
     props.history.push({
       pathname: "/success",
       state: { detail: responseJson }

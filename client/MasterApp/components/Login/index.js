@@ -1,18 +1,53 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Modal } from 'react-bootstrap'
+import { useHistory } from "react-router-dom";
+import { BASE_URL} from '../../../constants';
 import SequantixLogo from '../../../assests/SqxBigHome.png';
 import "./Login.scss";
 
 const App = (props) => {  
   const { register, handleSubmit, watch, errors } = useForm()
-  
+  const { externalProps } = props;
+  const [jsonResponse,updateData] = useState({});
+  let history = useHistory();
+
   const onSubmit = (data) => {
-    props.history.push("/home");
+    history.push({
+      pathname: "/home",
+      state: { detail: jsonResponse }
+    });
   } 
+
   const onLoginSubmit = (data) => {
-    props.history.push("/home");
+    history.push({
+      pathname: "/home",
+      state: { detail: jsonResponse }
+    });
   } 
+  
+  const getToken = () => {
+    const url = `${BASE_URL}/get_token?code=${externalProps.code}`;
+
+    fetch(url, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((response) => response.json().then((json) => {
+      updateData(json.data);
+      console.log(json.data);
+      if(json.status_code === 400) {
+        window.location.href = 'https://accounts.zoho.in/oauth/v2/auth?scope=ZohoExpense.fullaccess.ALL&client_id=1000.QG6M2A0EEQC3P47F79GK60J14O0E1V&response_type=code&access_type=offline&redirect_uri=http://0.0.0.0';
+      }
+    }))
+  }
+  useEffect(() => {
+    getToken();
+  },[]);
+
+
 
   const [show, setShow] = useState(false);
 
@@ -70,7 +105,6 @@ const App = (props) => {
             </form>
           </div>
         </Modal.Body>
-          
       </Modal>
     </div>
     

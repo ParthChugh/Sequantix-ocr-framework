@@ -1,6 +1,10 @@
 import os
 import cv2
 import pytesseract
+from flask import request
+import datetime
+import requests
+import json
 factor=5
 base_path=os.getcwd()+"/static/"
 
@@ -47,6 +51,8 @@ def ocr(co_ord,grey,f, isArray = False):
             dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
             t = pytesseract.image_to_string(dilation).replace(",", "").replace("\n", " ")
             data = data  + t + ","
+        if data != "":
+            expense_file(data)
     else:
         x,y,w,h=co_ord
         start_row, start_col = x, y
@@ -60,7 +66,7 @@ def ocr(co_ord,grey,f, isArray = False):
         end_row, end_col = h, int(w* .5)
         
         t = pytesseract.image_to_string(grey[start_col:start_col+ end_row , start_row:start_row+ end_col], config='--psm 6').replace(":", ",")
-        data = d + t;
+        data = d +"\n"+ t;
     f.write(data+'\n')
     print(data)
 
@@ -72,3 +78,45 @@ def fun(name,total_pages):
         l,w,h = img.shape
         co_ord = get_horizontal_lines(img, f)
     f.close()
+
+
+def expense_file(t):
+    t_list = t.split(',');
+    url = "https://expense.zoho.in/api/v1/expenses";
+    if (t_list[5].replace(',','').replace('.','').isdigit()) or t_list[6].replace(',','').replace('.','').isdigit():
+        payload = {
+            "JSONString": {
+                "currency_id": "267711000000000064",
+                "date": datetime.datetime.strptime(t_list[0], '%d/%m/%Y').strftime('%Y-%m-%d'),
+                "is_reimbursable": False,
+                "distance": 0,
+                "merchant_name": "Federal Bank",
+                "report_id": "267711000000008003",
+                "payment_mode": "Check",
+                "customer_name": "Parth Chugh",
+                "project_name": "Federal Bank",
+                "is_billable": False,
+                "is_inclusive_tax": False,
+                "attendees": [
+                    {
+                        "user_id": "267711000000007001"
+                    }
+                ],
+                "line_items": [
+                    {
+                        "category_name": "Bank",
+                        "amount": float(t_list[5].replace(',','')) if t_list[5] else float(t_list[6].replace(',','')),
+                        "description": t_list[2]
+                    }
+                ]
+            }
+        }
+        payload['JSONString'] = json.dumps(payload['JSONString'])
+        headers = {
+            'X-com-zoho-expense-organizationid': '60003854769',
+            'Authorization': 'Zoho-oauthtoken'+" "+ request.headers['token'] ,
+        }
+        response = requests.post(url, headers=headers, data=payload)
+        print(response)
+    
+    return {"message": "added"}

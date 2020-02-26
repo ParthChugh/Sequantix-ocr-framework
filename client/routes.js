@@ -6,48 +6,28 @@ import {
     HashRouter
   } from 'react-router-dom';
  
-import { Nav } from 'react-bootstrap';
 import Home from './MasterApp/components/FormOCR';
 import LoginPage from './MasterApp/components/Login';
 import FetchResult from './MasterApp/components/FetchResult';
 import Particles from 'react-particles-js';
 
-const App = () => (
-  <Router>        
-    <> 
-      <div className='content'>
-        <div className="content-container">
-          <Content />
-        </div>        
-        {/* <div style={{padding: 10}}>
-          <Footer />
-        </div>    */}
-      </div>
-    </>
-  </Router>
-);
-    
-const TopBar = () => (
-  <Nav className="justify-content" activeKey="/home">
-    <Nav.Item>
-      <Nav.Link href="/">CLUSTERING BASED OCR</Nav.Link>
-    </Nav.Item> 
-    <Nav.Item>
-      <Nav.Link href="/">home</Nav.Link>
-    </Nav.Item> 
-    <Nav.Item>
-      <Nav.Link href="/">About us</Nav.Link>
-    </Nav.Item> 
-  </Nav>
-)
+const App = (props) => {
+  return(
+    <Router>        
+      <> 
+        <div className='content'>
+          <div className="content-container">
+            <Content 
+              props={props}
+            />
+          </div>        
+        </div>
+      </>
+    </Router>
+    )    
+}
 
-const Footer = () => (
-  <footer className='footer'>
-    <p>Created by Sequantix</p>
-  </footer>
-)
-
-const Content = () =>  (
+const Content = ({props}) =>  (
   <Switch>
     <>
       <HashRouter> 
@@ -179,9 +159,11 @@ const Content = () =>  (
             height: "100%"
           }}
         >
-          <Route exact path="/home" component={ Home } />
-          <Route exact path="/" component={ LoginPage } />
-          <Route exact path="/success" component={ FetchResult } />
+          <Route exact path="/home" component={ Home }/>
+          <Route exact path="/">
+            <LoginPage externalProps={props} />
+          </Route>
+          <Route exact path="/success" component={ FetchResult }/>
     </div>
     </div>
     </HashRouter>

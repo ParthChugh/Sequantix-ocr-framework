@@ -8,12 +8,14 @@ const FetchResult = (props) => {
   const {location: {state: {detail}}} = props;
   const [showSpinner, updateShowSpinner] = useState(true)
   const [url, updateURL] = useState("")
+  debugger;
   const fetchData = () => { 
     const url = `${BASE_URL}/update_bounding_box?file_name=${detail.name}&total_pages=${detail.total_pages}`;
     fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'token': detail.access_token
       },
     })
       .then((response) => response.json().then((json) => {
