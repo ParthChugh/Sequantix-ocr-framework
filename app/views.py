@@ -13,7 +13,7 @@ def index():
     if (len(request.args) >0 and request.args['code']):
         return render_template("index.html", code=request.args['code'])
     else:
-        return redirect("https://accounts.zoho.in/oauth/v2/auth?scope=ZohoExpense.fullaccess.ALL&client_id=1000.QG6M2A0EEQC3P47F79GK60J14O0E1V&response_type=code&access_type=offline&redirect_uri=http://13.65.252.202/");
+        return redirect("https://accounts.zoho.in/oauth/v2/auth?scope=ZohoExpense.fullaccess.ALL&client_id=1000.QG6M2A0EEQC3P47F79GK60J14O0E1V&response_type=code&access_type=offline&redirect_uri=http://13.65.252.202");
 
 
 @app.route('/success', methods = ["POST"])
