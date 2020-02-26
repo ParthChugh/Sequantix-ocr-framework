@@ -39,7 +39,7 @@ const App = (props) => {
       updateData(json.data);
       console.log(json.data);
       if(json.status_code === 400) {
-        window.location.href = 'https://accounts.zoho.in/oauth/v2/auth?scope=ZohoExpense.fullaccess.ALL&client_id=1000.QG6M2A0EEQC3P47F79GK60J14O0E1V&response_type=code&access_type=offline&redirect_uri=http://http://13.65.252.202';
+        window.location.href = 'https://accounts.zoho.in/oauth/v2/auth?scope=ZohoExpense.fullaccess.ALL&client_id=1000.QG6M2A0EEQC3P47F79GK60J14O0E1V&response_type=code&access_type=offline&redirect_uri=http://13.65.252.202';
       }
     }))
   }
