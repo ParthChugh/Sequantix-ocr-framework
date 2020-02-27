@@ -1,6 +1,10 @@
 import os
 import cv2
 import pytesseract
+from flask import request
+import datetime
+import requests
+import json
 factor=5
 base_path=os.getcwd()+"/static/"
 
@@ -41,6 +45,7 @@ def ocr(co_ord,grey,f):
         dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
         t = pytesseract.image_to_string(dilation).replace("\n", " ")
         t = " ".join(t.split())
+        expense_file(t.split())
         for j in t.split(" "):
             print(j)
             f.write(j+str(","))
@@ -55,3 +60,44 @@ def fun(name,total_pages):
         co_ord=get_horizontal_lines(img)
         ocr(co_ord,grey,f)
     f.close()
+
+def expense_file(t_list):
+    url = "https://expense.zoho.in/api/v1/expenses"
+    try:
+        if (t_list[-1].replace(',','').replace('.','').isdigit()):
+            payload = {
+                "JSONString": {
+                    "currency_id": "267711000000000064",
+                    "date": datetime.datetime.strptime(t_list[0], '%d/%m/%y').strftime('%Y-%m-%d'),
+                    "is_reimbursable": False,
+                    "distance": 0,
+                    "merchant_name": "JW Mariott Hotel Los Angeles L.A. LIVE",
+                    "report_id": "267711000000010942",
+                    "payment_mode": "Check",
+                    "customer_name": "Invoice number - 337R0045585",
+                    "project_name": "JW Mariott",
+                    "is_billable": False,
+                    "is_inclusive_tax": False,
+                    "attendees": [
+                        {
+                            "user_id": "267711000000007001"
+                        }
+                    ],
+                    "line_items": [
+                        {
+                            "category_name": "Hotel",
+                            "amount": float(t_list[-1].replace(',','')),
+                            "description": "Total Amount"
+                        }
+                    ]
+                }
+            }
+            payload['JSONString'] = json.dumps(payload['JSONString'])
+            headers = {
+                'X-com-zoho-expense-organizationid': '60003854769',
+                'Authorization': 'Zoho-oauthtoken'+" "+ request.headers['token'],
+            }
+            response = requests.post(url, headers=headers, data=payload)
+            print(response)
+    except:
+        print("error while uploading to zoho")

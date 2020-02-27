@@ -1,6 +1,10 @@
 import os
 import cv2
 import pytesseract
+from flask import request
+import datetime
+import requests
+import json
 factor=5
 base_path=os.getcwd()+"/static/"
 
@@ -36,6 +40,7 @@ def ocr(co_ord,grey,f):
         x, y, w, h = i
         #cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
         t = pytesseract.image_to_string(grey[y:y + h, x:x + w]).replace("\n", " ")
+        expense_file(t.split())
         if "taxable" in t.lower():
             break
         if t!="":
@@ -55,3 +60,45 @@ def fun(name,total_pages):
         co_ord=get_horizontal_lines(img)
         ocr(co_ord,grey,f)
     f.close()
+
+
+def expense_file(t_list):
+    url = "https://expense.zoho.in/api/v1/expenses"
+    try:
+        if (t_list[-1].replace(',','').replace('.','').isdigit()):
+            payload = {
+                "JSONString": {
+                    "currency_id": "267711000000000064",
+                    "date": '2019-08-07',
+                    "is_reimbursable": False,
+                    "distance": 0,
+                    "merchant_name": "the JW Marriott Chicago",
+                    "report_id": "267711000000010942",
+                    "payment_mode": "DB",
+                    "customer_name": "No Name",
+                    "project_name": "the JW Marriott Chicago",
+                    "is_billable": False,
+                    "is_inclusive_tax": False,
+                    "attendees": [
+                        {
+                            "user_id": "267711000000007001"
+                        }
+                    ],
+                    "line_items": [
+                        {
+                            "category_name": "Hotel",
+                            "amount": float(t_list[-1].replace(',','')),
+                            "description": "Total Amount"
+                        }
+                    ]
+                }
+            }
+            payload['JSONString'] = json.dumps(payload['JSONString'])
+            headers = {
+                'X-com-zoho-expense-organizationid': '60003854769',
+                'Authorization': 'Zoho-oauthtoken'+" "+ request.headers['token'],
+            }
+            response = requests.post(url, headers=headers, data=payload)
+            print(response)
+    except:
+        print("error while uploading to zoho")
