@@ -20,7 +20,6 @@ def index():
 @app.route('/success', methods = ["POST"])
 def success():
     if request.method == 'POST':
-        print('-----data-----')
         array = []
         for i in range(0,len(request.files)):
             file_name = str(round(time.time()))
@@ -36,40 +35,37 @@ def success():
 @app.route('/update_bounding_box')
 def update_bounding_box():
     f = open(base_path+request.args['name_0']+'.csv','w')
-    array = request.args['total_pages']
     report = create_expense_report()
-    try:
-        for data in range(0,len(array) + 1):
-            total_pages = int(request.args['total_pages_'+str(data)])
-            file_name = request.args['name_'+str(data)]
-            fake=classfake.fun(file_name,0)
-            print(fake)
-            fff=0
-            if fake == "omni1":
-                omniTemplate1.fun(f,file_name,total_pages)
-                fff=1
-            if fake == "omni2":
-                omniTemplate2.fun(f,file_name,total_pages)
-                fff=1
-            if fake == "inter1":
-                interconTemplate1.fun(f,file_name,total_pages)
-                fff=1
-            if fake == "inter2":
-                interconTemplate2.fun(f, file_name,total_pages)
-                fff=1
-            if fake == "marriott1":
-                marriotTemplate1.fun(f, file_name,total_pages, report)
-                fff=1
-            if fake == "hdfc":
-                hdfc.fun(f, file_name,total_pages)
-                fff=1
-            if fake == "federal":
-                federal.fun(f, file_name, total_pages, report)
-                fff=1
-            if fff==0:
-                marriotTemplate2.fun(f, file_name, total_pages, report)
-    except: 
-        print('error while fetching')
+    for data in range(0,request.args['total_pages']):
+        total_pages = int(request.args['total_pages_'+str(data)])
+        file_name = request.args['name_'+str(data)]
+        fake=classfake.fun(file_name,0)
+        print(fake)
+        fff=0
+        if fake == "omni1":
+            omniTemplate1.fun(f,file_name,total_pages)
+            fff=1
+        if fake == "omni2":
+            omniTemplate2.fun(f,file_name,total_pages)
+            fff=1
+        if fake == "inter1":
+            interconTemplate1.fun(f,file_name,total_pages)
+            fff=1
+        if fake == "inter2":
+            interconTemplate2.fun(f, file_name,total_pages)
+            fff=1
+        if fake == "marriott1":
+            marriotTemplate1.fun(f, file_name,total_pages, report)
+            fff=1
+        if fake == "hdfc":
+            hdfc.fun(f, file_name,total_pages)
+            fff=1
+        if fake == "federal":
+            federal.fun(f, file_name, total_pages, report)
+            fff=1
+        if fff==0:
+            marriotTemplate2.fun(f, file_name, total_pages, report)
+    
     f.close()
     return { "message": "Updated", "file_name": request.args['name_0']+'.csv' }
 
