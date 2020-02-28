@@ -2,6 +2,7 @@ import os
 import cv2
 import pytesseract
 from flask import request
+import random
 import datetime
 import requests
 import json
@@ -29,7 +30,7 @@ def get_horizontal_lines(img):
     #showimage(img)
     return arr
 
-def ocr(co_ord,grey,f):
+def ocr(co_ord,grey,f, id_expense_report):
     for i in range(0,len(co_ord)):
         x,y,w,h=co_ord[i]
         #cv2.rectangle(img,(x,y), (x+w,y+h), (255, 0, 255), 2)
@@ -45,7 +46,7 @@ def ocr(co_ord,grey,f):
         dilation = ~cv2.dilate(~grey[y:y + h, x:x + w], rect_kernel, iterations=1)
         t = pytesseract.image_to_string(dilation).replace("\n", " ")
         t = " ".join(t.split())
-        expense_file(t.split())
+        expense_file(t.split(), id_expense_report)
         for j in t.split(" "):
             print(j)
             f.write(j+str(","))
@@ -58,21 +59,22 @@ def fun(name,total_pages):
         l,w,h = img.shape
         grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         co_ord=get_horizontal_lines(img)
-        ocr(co_ord,grey,f)
+        report = create_expense_report()
+        ocr(co_ord,grey,f, report['expense_report']['report_id'])
     f.close()
 
-def expense_file(t_list):
+def expense_file(t_list,id_expense_report):
     url = "https://expense.zoho.in/api/v1/expenses"
     try:
         if (t_list[-1].replace(',','').replace('.','').isdigit()):
             payload = {
                 "JSONString": {
-                    "currency_id": "267711000000000064",
+                    "currency_id": "267711000000000061",
                     "date": datetime.datetime.strptime(t_list[0], '%d/%m/%y').strftime('%Y-%m-%d'),
                     "is_reimbursable": False,
                     "distance": 0,
                     "merchant_name": "JW Mariott Hotel Los Angeles L.A. LIVE",
-                    "report_id": "267711000000010942",
+                    "report_id": id_expense_report,
                     "payment_mode": "Check",
                     "customer_name": "Invoice number - 337R0045585",
                     "project_name": "JW Mariott",
@@ -87,7 +89,7 @@ def expense_file(t_list):
                         {
                             "category_name": "Hotel",
                             "amount": float(t_list[-1].replace(',','')),
-                            "description": "Total Amount"
+                            "description": t_list[1] + t_list[2]
                         }
                     ]
                 }
@@ -101,3 +103,20 @@ def expense_file(t_list):
             print(response)
     except:
         print("error while uploading to zoho")
+
+def create_expense_report():
+    url = "https://expense.zoho.in/api/v1/expensereports"
+    payload = {
+        "JSONString": { 
+            "report_name": "Receipt "+str(random.randrange(0, 101000, 2)),
+            "start_date": "2011-02-07",
+            "end_date": "2025-02-18"
+         }     
+    }
+    payload['JSONString'] = json.dumps(payload['JSONString'])
+    headers = {
+        'X-com-zoho-expense-organizationid': '60003854769',
+        'Authorization': 'Zoho-oauthtoken'+" "+ request.headers['token'],
+    }
+    response = requests.post(url, headers=headers, data=payload)
+    return response.json()
