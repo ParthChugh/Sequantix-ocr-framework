@@ -5,28 +5,39 @@ import '../FormOCR/styles.scss';
 import SequantixLogo from '../../../assests/SqxBigHome.png';
 
 const FetchResult = (props) => {  
-  const {location: {state: {detail}}} = props;
+  const {location: {state}} = props;
+  const data = {}
   const [showSpinner, updateShowSpinner] = useState(true)
   const [url, updateURL] = useState("")
-  debugger;
   const fetchData = () => { 
-    const url = `${BASE_URL}/update_bounding_box?file_name=${detail.name}&total_pages=${detail.total_pages}`;
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'token': detail.access_token
-      },
-    })
-      .then((response) => response.json().then((json) => {
-        const getCSVurl = `${BASE_URL}/getcsv?file_name=${json.file_name}`;
-        fetch(getCSVurl).then(()=> console.log('Downloaded'));
-        updateURL(getCSVurl);
-        updateShowSpinner(false)
-      }))
-      .catch(() => {
-        
-      });
+    if(typeof state !== 'undefined') {
+      let data = ''
+      state.detail['response'].forEach((el,index)=> {
+        const newData = el['total_pages']
+        const name = el['name']
+        data = data + `total_pages_${index}=${newData}` + "&" + `name_${index}=${name}`+ "&"
+      })
+      const url = `${BASE_URL}/update_bounding_box?${data}&total_pages=${state.detail['response'].length}`;
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': state.detail.access_token,
+        }
+      })
+        .then((response) => response.json().then((json) => {
+          const getCSVurl = `${BASE_URL}/getcsv?file_name=${json.file_name}`;
+          fetch(getCSVurl).then(()=> console.log('Downloaded'));
+          updateURL(getCSVurl);
+          updateShowSpinner(false)
+        }))
+        .catch(() => {
+          
+        });
+    } else {
+      window.location.href = BASE_URL;
+    }
+    
   }
 
   useEffect(() => {

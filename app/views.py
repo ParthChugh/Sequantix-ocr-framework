@@ -4,6 +4,7 @@ import os
 import json
 from app import converter, interconTemplate1, interconTemplate2, marriotTemplate1, marriotTemplate2, nikkoTemplate1, omniTemplate1, omniTemplate2, classfake, hdfc, federal
 factor=5
+import random
 base_path=os.getcwd()+'/static/'
 from app import app
 import requests
@@ -19,49 +20,58 @@ def index():
 @app.route('/success', methods = ["POST"])
 def success():
     if request.method == 'POST':
-        file_name = str(round(time.time()))
-        f = request.files['file']
-        doc_path=base_path+file_name+".pdf"
-        f.save(doc_path)
-        total_pages=converter.Convert(doc_path,-1,file_name,base_path,factor)
-    return {"name":  file_name, "total_pages": total_pages};
+        print('-----data-----')
+        array = []
+        for i in range(0,len(request.files)):
+            file_name = str(round(time.time()))
+            f = request.files['file'+ str(i)]
+            doc_path=base_path+file_name+".pdf"
+            f.save(doc_path)
+            total_pages=converter.Convert(doc_path,-1,file_name,base_path,factor)
+            array.append({"name":  file_name, "total_pages": total_pages});
+            time.sleep(5)
+        return {"response": array}
     
 
 @app.route('/update_bounding_box')
 def update_bounding_box():
-    total_pages = int(request.args['total_pages'])
-    file_name = request.args['file_name']
-    fake=classfake.fun(file_name,0)
-    print(fake)
-    fff=0
-    if fake == "omni1":
-        omniTemplate1.fun(file_name,total_pages)
-        fff=1
-    if fake == "omni2":
-        omniTemplate2.fun(file_name,total_pages)
-        fff=1
-    if fake == "inter1":
-        interconTemplate1.fun(file_name,total_pages)
-        fff=1
-    if fake == "inter2":
-        interconTemplate2.fun(file_name,total_pages)
-        fff=1
-    if fake == "marriott1":
-        marriotTemplate1.fun(file_name,total_pages)
-        fff=1
-    if fake == "hdfc":
-        hdfc.fun(file_name,total_pages)
-        fff=1
-    if fake == "federal":
-        federal.fun(file_name,total_pages)
-        fff=1
-    if fff==0:
-        marriotTemplate2.fun(file_name, total_pages)
-
-    #classfake.fun(file_name,total_pages)
-    file_name+=".csv"
-    return { "message": "Updated", "file_name": file_name }
-
+    f = open(base_path+request.args['name_0']+'.csv','w')
+    array = request.args['total_pages']
+    report = create_expense_report()
+    try:
+        for data in range(0,len(array) + 1):
+            total_pages = int(request.args['total_pages_'+str(data)])
+            file_name = request.args['name_'+str(data)]
+            fake=classfake.fun(file_name,0)
+            print(fake)
+            fff=0
+            if fake == "omni1":
+                omniTemplate1.fun(f,file_name,total_pages)
+                fff=1
+            if fake == "omni2":
+                omniTemplate2.fun(f,file_name,total_pages)
+                fff=1
+            if fake == "inter1":
+                interconTemplate1.fun(f,file_name,total_pages)
+                fff=1
+            if fake == "inter2":
+                interconTemplate2.fun(f, file_name,total_pages)
+                fff=1
+            if fake == "marriott1":
+                marriotTemplate1.fun(f, file_name,total_pages, report)
+                fff=1
+            if fake == "hdfc":
+                hdfc.fun(f, file_name,total_pages)
+                fff=1
+            if fake == "federal":
+                federal.fun(f, file_name, total_pages, report)
+                fff=1
+            if fff==0:
+                marriotTemplate2.fun(f, file_name, total_pages, report)
+    except: 
+        print('error while fetching')
+    f.close()
+    return { "message": "Updated", "file_name": request.args['name_0']+'.csv' }
 
 @app.route('/getcsv')
 def get_csv_file(): 
@@ -88,3 +98,21 @@ def get_token():
         return { "message": "Error", "status_code": 400, "data": data.text }
     else:
         return { "message": "Updated", "data": json.loads(data.text) }
+
+
+def create_expense_report():
+    url = "https://expense.zoho.in/api/v1/expensereports"
+    payload = {
+        "JSONString": { 
+            "report_name": "Receipt "+str(random.randrange(0, 101000, 2)),
+            "start_date": "2011-02-07",
+            "end_date": "2025-02-18"
+         }     
+    }
+    payload['JSONString'] = json.dumps(payload['JSONString'])
+    headers = {
+        'X-com-zoho-expense-organizationid': '60003854769',
+        'Authorization': 'Zoho-oauthtoken'+" "+ request.headers['token'],
+    }
+    response = requests.post(url, headers=headers, data=payload)
+    return response.json()

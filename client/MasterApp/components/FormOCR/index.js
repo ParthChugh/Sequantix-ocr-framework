@@ -21,24 +21,22 @@ const HelloForm =  (props) =>  {
     Object.values(document.getElementById('upload').files).forEach((el) => {
       return uploadedFiles[el.name] = false
     })
-  
-    Object.values(updatedFiles).forEach(element => {
-      const data = new FormData()
-      data.append('file', element)
-      fetch(url, {
-        method: 'POST', 
-        body: data,
-      })
-        .then((response) => response.json().then((json) => {
-          updateResponse(json);
-          uploadedFiles[element.name] = true;
-          updateShowDetectButton(true);
-          updatedFilesUploaded(uploadedFiles);          
-          updateFetchingObject(false)
-        }))
-        .catch(() => {
-      });    
-    });
+    const formData = new FormData();
+    for(let x=0;x<updatedFiles.length;x++) {
+      formData.append('file'+x, updatedFiles[x]);	
+    }
+    fetch(url, {
+      method: 'POST', 
+      body: formData,
+    })
+      .then((response) => response.json().then((json) => {
+        updateShowDetectButton(true);
+        updateFetchingObject(false)
+        updateResponse(json);
+        updatedFilesUploaded(uploadedFiles);          
+      }))
+      .catch(() => {
+    });    
   } 
 
   const showCheckBox =  (files) => {
@@ -55,17 +53,23 @@ const HelloForm =  (props) =>  {
       return uploadedFiles[el.name] = false
     })
     setFileName(Object.values(document.getElementById('upload').files).map((el)=> el.name));
-    updatedFilesUploaded(uploadedFiles)
+    updatedFilesUploaded(uploadedFiles) 
     successCallback(document.getElementById('upload').files);
     updateLoader()
   } 
 
   const handleClick = () => {
-    responseJson["access_token"] = props.location.state.detail.access_token
-    props.history.push({
-      pathname: "/success",
-      state: { detail: responseJson }
-    });
+    if(typeof props.location.state !== 'undefined') {
+      responseJson["access_token"] = props.location.state.detail.access_token
+      props.history.push({
+        pathname: "/success",
+        state: { detail: responseJson }
+      });
+    }
+    else {
+      window.location.href = BASE_URL;
+    }
+   
   }
 
   return (

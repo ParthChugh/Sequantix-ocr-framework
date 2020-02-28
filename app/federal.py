@@ -8,7 +8,7 @@ import json
 factor=5
 base_path=os.getcwd()+"/static/"
 
-def get_horizontal_lines(img, fileName):
+def get_horizontal_lines(img, fileName,report_id):
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(grey, 0, 255, cv2.THRESH_BINARY_INV)
     cnts = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -37,12 +37,12 @@ def get_horizontal_lines(img, fileName):
         if temp_y == y:
             array.append([x,y,w,h])
         else:
-            ocr(array,crop_img,fileName, True)
+            ocr(array,crop_img,fileName, True,report_id)
             array=[]
             array.append([x,y,w,h])
             temp_y = y;
 
-def ocr(co_ord,grey,f, isArray = False):
+def ocr(co_ord,grey,f, isArray = False, report_id = '0'):
     if isArray:
         data = ""
         for i in range(0,len(co_ord)):
@@ -52,7 +52,7 @@ def ocr(co_ord,grey,f, isArray = False):
             t = pytesseract.image_to_string(dilation).replace(",", "").replace("\n", " ")
             data = data  + t + ","
         if data != "":
-            expense_file(data)
+            expense_file(data, report_id)
     else:
         x,y,w,h=co_ord
         start_row, start_col = x, y
@@ -70,17 +70,15 @@ def ocr(co_ord,grey,f, isArray = False):
     f.write(data+'\n')
     print(data)
 
-def fun(name,total_pages):
-    f = open(base_path+name+'.csv','w')
+def fun(f, name,total_pages,report):
     for i in range(0,total_pages):
         img = cv2.imread(base_path+name+"_"+str(i)+".png")
         grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         l,w,h = img.shape
-        co_ord = get_horizontal_lines(img, f)
-    f.close()
+        co_ord = get_horizontal_lines(img, f,report['expense_report']['report_id'])
 
 
-def expense_file(t):
+def expense_file(t, expense_id):
     t_list = t.split(',');
     url = "https://expense.zoho.in/api/v1/expenses";
     if (t_list[5].replace(',','').replace('.','').isdigit()) or t_list[6].replace(',','').replace('.','').isdigit():
@@ -91,7 +89,7 @@ def expense_file(t):
                 "is_reimbursable": False,
                 "distance": 0,
                 "merchant_name": "Federal Bank",
-                "report_id": "267711000000008003",
+                "report_id": expense_id,
                 "payment_mode": "Check",
                 "customer_name": "Parth Chugh",
                 "project_name": "Federal Bank",

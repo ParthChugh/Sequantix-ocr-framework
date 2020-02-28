@@ -46,9 +46,7 @@ def ocr(co_ord,grey,f):
         if (not("-" in t.split(" ")[0])) and (not("total" in t.lower())) and (t!=""):
             f.write(',,'+t+'\n')
 
-def fun(name,total_pages):
-    f = open(base_path+name+'.csv','w')
-    f.write("DATE,DESCRIPTION,,CHARGES,CREDITS\n")
+def fun(f, name,total_pages):
     for i in range(0,total_pages):
         img = cv2.imread(base_path+name+"_"+str(i)+".png")
         l,w,h = img.shape
@@ -56,4 +54,4 @@ def fun(name,total_pages):
         grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         co_ord=get_horizontal_lines(img)
         ocr(co_ord,grey,f)
-    f.close()
+  

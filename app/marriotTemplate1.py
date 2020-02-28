@@ -52,17 +52,13 @@ def ocr(co_ord,grey,f, reponse_id):
                 continue
 
 
-def fun(name,total_pages):
-    f = open(base_path + name + '.csv', 'w')
+def fun(f, name,total_pages,report):
     for i in range(0,total_pages):
         img = cv2.imread(base_path+name+"_"+str(i)+".png")
         l,w,h = img.shape
         grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         co_ord=get_horizontal_lines(img)
-        report = create_expense_report()
-        print(report['expense_report']['report_id'])
         ocr(co_ord,grey,f,report['expense_report']['report_id'])
-    f.close()
 
 
 def expense_file(t_list,id_expense_report):
@@ -105,20 +101,3 @@ def expense_file(t_list,id_expense_report):
             print(response)
     except:
         print("error while uploading to zoho")
-
-def create_expense_report():
-    url = "https://expense.zoho.in/api/v1/expensereports"
-    payload = {
-        "JSONString": {
-            "report_name": "Receipt "+str(random.randrange(0, 101000, 2)),
-            "start_date": "2011-02-07",
-            "end_date": "2025-02-18"
-         }
-    }
-    payload['JSONString'] = json.dumps(payload['JSONString'])
-    headers = {
-        'X-com-zoho-expense-organizationid': '60003854769',
-        'Authorization': 'Zoho-oauthtoken'+" "+ request.headers['token'],
-    }
-    response = requests.post(url, headers=headers, data=payload)
-    return response.json()
