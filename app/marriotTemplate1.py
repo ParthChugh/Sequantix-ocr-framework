@@ -87,7 +87,7 @@ def expense_file(t_list,id_expense_report):
                         {
                             "category_name": "Hotel",
                             "amount": float(t_list[-1].replace(',','')),
-                            "description": "Total Amount"
+                            "description": t_list[0] + '_'+ t_list[1] +'_' + t_list[2]
                         }
                     ]
                 }
