@@ -55,12 +55,8 @@ const App = (props) => {
   const handleShow = () => setShow(true);
 
   return (
-    <div className="login">
-      <div className="logo-header"> 
-        <img src={ SequantixLogo } />
-      </div>
-      
-      <form className="login-container center-login" onSubmit={handleSubmit(onSubmit)}>  
+    <div className="login container">      
+      <form className="login-container center-login vertical-center" onSubmit={handleSubmit(onSubmit)}>  
         <h2>
           Login
         </h2>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap'
 import { BASE_URL } from '../../../constants';
 import '../FormOCR/styles.scss';
-import SequantixLogo from '../../../assests/SqxBigHome.png';
 
 const FetchResult = (props) => {  
   const {location: {state}} = props;
@@ -45,8 +44,7 @@ const FetchResult = (props) => {
   },[])
   return (
     <div className="center-page"> 
-        <div className="logo-header"> 
-          <img src={ SequantixLogo } />
+        <div className="logo-header" style={{marginTop: 200}}> 
           <div>
             CSV will be downloaded soon<br/>
           </div> 

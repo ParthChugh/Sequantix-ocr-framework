@@ -74,14 +74,11 @@ const HelloForm =  (props) =>  {
 
   return (
     <div>
-      <div className="center-page"> 
-        <div className="logo-header"> 
-          <img src={ SequantixLogo } />
-        </div>
-        <div className="home-container">
-        <h1 className="font-weight-eurostile">
-          Sequivision
-        </h1>
+      <div className="center-page "> 
+        <div className="home-container container">
+          <h1 className="font-weight-eurostile">
+            Upload files here
+          </h1>
           <div>
             { (fetchingObject) ? 
             <div className="spinner-center">
