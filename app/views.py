@@ -36,7 +36,7 @@ def success():
 def update_bounding_box():
     f = open(base_path+request.args['name_0']+'.csv','w')
     report = create_expense_report()
-    for data in range(0,request.args['total_pages']):
+    for data in range(0,int(request.args['total_pages'])):
         total_pages = int(request.args['total_pages_'+str(data)])
         file_name = request.args['name_'+str(data)]
         fake=classfake.fun(file_name,0)
