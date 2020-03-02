@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap'
 import { BASE_URL } from '../../../constants';
 import '../FormOCR/styles.scss';
+import B1_1 from '../../../assests/B1_1.png';
+import B1_2 from '../../../assests/B1_2.png';
+import B1_3 from '../../../assests/B1_3.png';
+import MARRIOT_T2_1 from '../../../assests/marriot_2_1.png';
+import MARRIOT_T2_2 from '../../../assests/marriot_2_2.png';
 
 const FetchResult = (props) => {  
   const {location: {state}} = props;
-  const data = {}
   const [showSpinner, updateShowSpinner] = useState(true)
   const [url, updateURL] = useState("")
   const fetchData = () => { 
@@ -38,13 +42,31 @@ const FetchResult = (props) => {
     }
     
   }
-
   useEffect(() => {
     fetchData();
   },[])
   return (
     <div className="center-page"> 
+    <div>
+    {Object.keys(state.detail.file_names).includes('B1.pdf') ?
+        <div className="container" style={{marginTop: 10}}>
+          <img src={B1_1} />
+          <img src={B1_2} />
+          <img src={B1_3} />
+        </div> : <div/>
+      }
+      {Object.keys(state.detail.file_names).includes('MARRIOT_T2_1.pdf') ?
+        <div className="container">      
+          <img src={MARRIOT_T2_1}/>
+          <img src={MARRIOT_T2_2}/>
+        </div> : <div/>
+      }
+    </div>
+
+      
         <div className="logo-header" style={{marginTop: 200}}> 
+          
+        
           <div>
             CSV will be downloaded soon<br/>
           </div> 
