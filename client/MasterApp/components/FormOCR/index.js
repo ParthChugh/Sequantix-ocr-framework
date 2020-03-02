@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import {BASE_URL} from '../../../constants'
 import {Button, Spinner} from 'react-bootstrap';
 import ShowCheckBox from './showCheckBox';
-import SequantixLogo from '../../../assests/SqxBigHome.png';
 import './styles.scss';
 
 const HelloForm =  (props) =>  {  
@@ -36,7 +35,7 @@ const HelloForm =  (props) =>  {
         updatedFilesUploaded(uploadedFiles);          
       }))
       .catch(() => {
-    });    
+    });
   } 
 
   const showCheckBox =  (files) => {
@@ -61,6 +60,7 @@ const HelloForm =  (props) =>  {
   const handleClick = () => {
     if(typeof props.location.state !== 'undefined') {
       responseJson["access_token"] = props.location.state.detail.access_token
+      responseJson["file_names"] = filesUploaded
       props.history.push({
         pathname: "/success",
         state: { detail: responseJson }

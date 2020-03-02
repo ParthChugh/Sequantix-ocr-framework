@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { Button, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import { BASE_URL} from '../../../constants';
-import SequantixLogo from '../../../assests/SqxBigHome.png';
 import "./Login.scss";
 
 const App = (props) => {  
@@ -47,15 +46,13 @@ const App = (props) => {
     getToken();
   },[]);
 
-
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
-    <div className="login container">      
+    <div className="login container" style={{position: 'absolute', top: -100, left: 150}}>      
       <form className="login-container center-login vertical-center" onSubmit={handleSubmit(onSubmit)}>  
         <h2>
           Login
@@ -70,9 +67,8 @@ const App = (props) => {
         <a className="login-ref" variant="primary" onClick={handleShow}>
           Sign up
         </a>
-      </form>
-      
 
+      </form>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Sign Up</Modal.Title>
