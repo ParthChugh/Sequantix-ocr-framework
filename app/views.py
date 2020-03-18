@@ -43,10 +43,10 @@ def update_bounding_box():
         print(fake)
         fff=0
         if fake == "omni1":
-            omniTemplate1.fun(f,file_name,total_pages)
+            omniTemplate1.fun(f,file_name,total_pages, report)
             fff=1
         if fake == "omni2":
-            omniTemplate2.fun(f,file_name,total_pages)
+            omniTemplate2.fun(f,file_name,total_pages, report)
             fff=1
         if fake == "inter1":
             interconTemplate1.fun(f,file_name,total_pages)
