@@ -8,6 +8,8 @@ import { useHistory } from "react-router-dom";
 import B1_3 from '../../../assests/B1_3.png';
 import MARRIOT_T2_1 from '../../../assests/marriot_2_1.png';
 import MARRIOT_T2_2 from '../../../assests/marriot_2_2.png';
+import OMNI_1 from '../../../assests/omni_1.png'
+import OMNI_2 from '../../../assests/omni_2.png'
 
 const FetchResult = (props) => {  
   let history = useHistory();
@@ -61,7 +63,7 @@ const FetchResult = (props) => {
   return (
     <div className="center-page"> 
       <div>
-      {Object.keys(state.detail.file_names).includes('B1.pdf') ?
+        {Object.keys(state.detail.file_names).includes('B1.pdf') ?
           <div className="container" style={{marginTop: 10}}>
             <img src={B1_1} />
             <img src={B1_2} />
@@ -72,6 +74,12 @@ const FetchResult = (props) => {
           <div className="container">      
             <img src={MARRIOT_T2_1}/>
             <img src={MARRIOT_T2_2}/>
+          </div> : <div/>
+        }
+        {Object.keys(state.detail.file_names).includes('OMNI') ?
+          <div className="container" style={{marginTop: 10}}>
+            <img src={OMNI_2} />
+            <img src={OMNI_1} />
           </div> : <div/>
         }
       </div>
