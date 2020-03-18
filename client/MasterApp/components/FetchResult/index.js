@@ -76,7 +76,7 @@ const FetchResult = (props) => {
             <img src={MARRIOT_T2_2}/>
           </div> : <div/>
         }
-        {Object.keys(state.detail.file_names).includes('OMNI') ?
+        {Object.keys(state.detail.file_names).includes('OMNI_T2_1.pdf') || Object.keys(state.detail.file_names).includes('OMNI_T1_1.pdf')?
           <div className="container" style={{marginTop: 10}}>
             <img src={OMNI_2} />
             <img src={OMNI_1} />
