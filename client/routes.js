@@ -52,6 +52,7 @@ const Content = ({props}) =>  {
               <Route exact path="/">
                 <div>
                 <Particles 
+                  style={{position: 'absolute', zIndex: -999 }}
                   params={{
                     "particles": {
                       "number": {

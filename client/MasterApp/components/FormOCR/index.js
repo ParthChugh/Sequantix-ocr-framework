@@ -76,7 +76,7 @@ const HelloForm =  (props) =>  {
     <div>
       <div className="center-page "> 
         <div className="home-container container">
-          <h1 className="font-weight-eurostile">
+          <h1 className="font-weight-eurostile" style={{color: "white"}}>
             Upload files here
           </h1>
           <div>
@@ -87,19 +87,20 @@ const HelloForm =  (props) =>  {
             </div>
           : !showDetectButton &&
           <form className="form-center" onSubmit={handleSubmit(onSubmit)}>  
-            {errors.upload && errors.upload.type === 'required' && <h4>Please upload some file</h4>}          
+            {errors.upload && errors.upload.type === 'required' && <h4 style={{color: "white"}}>Please upload some file</h4>}          
             <input
               className="draggable-container"
               type="file" 
               name="upload"
               id="upload"
               multiple 
+              style={{color: "white"}}
               ref={register({
                 required: true,
               })}
             />             
-            {fileName && <div>Uploaded file name is {fileName}</div>}
-            <Button variant="outline-dark" type="submit">Submit</Button>
+            {fileName && <div style={{color: "white"}}>Uploaded file name is {fileName}</div>}
+            <Button variant="outline-dark" type="submit" style={{color: "white"}}>Submit</Button>
           </form>
           }
             {
@@ -107,6 +108,7 @@ const HelloForm =  (props) =>  {
                 <Button 
                   variant="outline-dark"  
                   onClick={ handleClick }
+                  style={{color: "white"}}
                 >
                   Detect Text
                 </Button>

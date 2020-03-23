@@ -84,7 +84,7 @@ const FetchResult = (props) => {
         }
       </div>
       <div className="logo-header"> 
-        <div>
+        <div style={{color: "white"}}>
           CSV will be downloaded soon<br/>
         </div> 
         { 
@@ -95,9 +95,9 @@ const FetchResult = (props) => {
             <div >
               <a href={url} target="_blank">Download csv</a>  
             </div>   
-            <h2>Thank you</h2>
-              <h2>Want to use for another file?</h2>        
-              <button className="btn btn-secondary" onClick={showUploadScreen}>
+            <h2 style={{color: "white"}}>Thank you</h2>
+              <h2 style={{color: "white"}}>Want to use for another file?</h2>        
+              <button className="btn btn-secondary" onClick={showUploadScreen} style={{color: "white"}}>
                 Click Me
               </button>
           </div>
