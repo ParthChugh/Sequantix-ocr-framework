@@ -52,44 +52,44 @@ const App = (props) => {
   const handleShow = () => setShow(true);
 
   return (
-    <div className="login container" style={{position: 'absolute', top: -100, left: 150}}>      
+    <div className="login container">      
       <form className="login-container center-login vertical-center" onSubmit={handleSubmit(onSubmit)}>  
         <h2>
           Login
         </h2>
         <input name="username"  placeholder="Enter your name" ref={register({required: true})} />
-        {errors.username && <span>Please enter a valid username</span>}
+        {errors.username && <span style={{color: "white"}}>Please enter a valid username</span>}
         <input type="password" name="password" placeholder="Password" autoComplete="current-password" ref={register({required: true})} />
-        {errors.password && <span>Please enter a valid password</span>}    
-        <Button type="submit" variant="outline-dark" >
+        {errors.password && <span style={{color: "white"}}>Please enter a valid password</span>}    
+        <Button type="submit" variant="outline-dark" style={{color: "white"}}>
           Submit
         </Button>
-        <a className="login-ref" variant="primary" onClick={handleShow}>
+        <a className="login-ref" variant="primary" onClick={handleShow} style={{color: "white"}}>
           Sign up
         </a>
 
       </form>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sign Up</Modal.Title>
+          <Modal.Title style={{color: "white"}}>Sign Up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="signup">
             <form className="margin-10 flex-direction-column signup-container" onSubmit={handleSubmit(onLoginSubmit)}>  
               <input autoComplete="username" name="loginUsername" placeholder="Enter your name" ref={register({required: true})} />            
-              {errors.loginUsername && <span>Please enter a valid username</span>}
+              {errors.loginUsername && <span style={{color: "white"}}>Please enter a valid username</span>}
               <input type="text" placeholder="Email" name="email" autoComplete="username" ref={register({required: true, pattern: /^\S+@\S+$/i})} />
               {errors.email && <span>Please enter a valid Email Id</span>}
               <input type="password" name="loginPassword" placeholder="Password" autoComplete="current-password" ref={register({required: true})} />
-              {errors.loginPassword && <span>Please enter valid password</span>}    
+              {errors.loginPassword && <span style={{color: "white"}}>Please enter valid password</span>}    
               <div className="flex-direction-row">
                 <div className="margin-10">
-                  <Button type="submit" variant="primary" >
+                  <Button type="submit" variant="primary" style={{color: "white"}}>
                     Continue
                   </Button>
                 </div>
                 <div className="margin-10">
-                  <Button variant="secondary" onClick={handleClose}>
+                  <Button variant="secondary" onClick={handleClose} style={{color: "white"}}>
                     Close
                   </Button>
                 </div>

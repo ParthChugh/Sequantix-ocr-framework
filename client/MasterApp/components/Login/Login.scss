@@ -12,13 +12,13 @@
         margin-top: 200px;
         align-items: center;
         input {
-            width: 25%;
+            min-width: 25%;
             margin-bottom: 10px;
             border-radius: 5px;
         }
         h2 {
             margin-bottom: 40px; 
-            
+            color: white
         }
     }
     .login-modal {

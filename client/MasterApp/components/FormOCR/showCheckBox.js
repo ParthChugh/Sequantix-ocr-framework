@@ -14,7 +14,7 @@ const ShowCheckBox = (props) => {
 
     return Object.keys(files).map((el) => (
         <div className="upload-data" key={guid()}>
-            <h4>{el}</h4>
+            <h4 style={{color: "white"}}>{el}</h4>
             <FontAwesomeIcon icon={faCheckSquare} /> 
         </div>
     ))
