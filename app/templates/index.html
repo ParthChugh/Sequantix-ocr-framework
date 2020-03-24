@@ -1,6 +1,6 @@
 <html !DOCTYPE>
   <head>
-    <title>Sequantix OCR</title>
+    <title>OCR</title>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -11,11 +11,15 @@
     <link rel="../../facvicon.ico" href="">
     <base href="/"> 
   </head> 
-  <body style="background-color: #EE7C33" >
+  <body style="background: #008fd5; background: -webkit-linear-gradient(left, #008fd5,#7fc23f);" >   
+    <div style="text-align: center;  font-size: 72px;background: -webkit-linear-gradient(#2a2b2dff,#2da8d8ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent;">
+      <h1>ARIA</h1> 
+    </div>
+    
     <div id="root" code="{{code}}"></div>
     <!-- Attach React components -->
     
-    <script src="../../dist/scripts/main.js"></script>    
-    <!-- <script src="{{ config.BASE_URL }}scripts/main.js"></script>     -->
+    <!-- <script src="../../dist/scripts/main.js"></script>     -->
+    <script src="{{ config.BASE_URL }}scripts/main.js"></script>    
   </body>
 </html
