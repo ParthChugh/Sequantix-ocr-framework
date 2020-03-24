@@ -61,7 +61,7 @@ const FetchResult = (props) => {
     fetchData();
   },[])
   return (
-    <div className="center-page"> 
+    <div className="center-page" style={{marginTop: 100}}> 
       <div>
         {Object.keys(state.detail.file_names).includes('B1.pdf') ?
           <div className="container" style={{marginTop: 10}}>
